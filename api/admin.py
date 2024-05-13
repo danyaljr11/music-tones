@@ -4,4 +4,3 @@ from .models import Section, Item
 
 admin.site.register(Section)
 admin.site.register(Item)
-

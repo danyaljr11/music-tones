@@ -1,8 +1,8 @@
-from rest_framework import generics
+from rest_framework import generics, status
 from rest_framework.response import Response
-
+from rest_framework.views import APIView
 from .models import Section, Item
-from .serializers import Sections_Serializer, Items_Serializer
+from .serializers import Sections_Serializer, Items_Serializer, FCMDeviceSerializer
 
 
 class SectionList(generics.ListAPIView):
@@ -29,3 +29,12 @@ class ItemList(generics.ListAPIView):
         queryset = self.get_queryset()
         serializer = self.get_serializer(queryset, many=True)
         return Response({'items': serializer.data})
+
+
+class FCMDeviceView(APIView):
+    def post(self, request, format=None):
+        serializer = FCMDeviceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

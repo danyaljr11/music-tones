@@ -6,5 +6,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('rest/sections/', views.SectionList.as_view()),
     path('rest/items/<int:pk>', views.ItemList.as_view()),
+    path('fcm-device/', views.FCMDeviceView.as_view()),
 
 ]
